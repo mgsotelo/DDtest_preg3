@@ -9,9 +9,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -35,15 +33,17 @@ public class Main {
 
                     double thenumber = Double.parseDouble(theinput);
                     BigDecimal theNumber = BigDecimal.valueOf(thenumber);
-                    // System.out.println(thenumber);
-                    // String theresults = generateArraysInSoles(thenumber);
-                    // System.out.println(theresults);
-                    ArrayList<ArrayList<BigDecimal>> thearray = generateArrayInSolesReloaded(theNumber);
-                    // List<ArrayList<BigDecimal>> collect = thearray.stream().distinct().collect(Collectors.toList());
 
-                    // System.out.println(collect.toString());
+                    // primer metodo es mas optimo y rapido pero no da todos los resultados, solo los mas optimos
+                    // System.out.println(thenumber);
+                    // String theresults = generateArrayInSoles(thenumber);
+                    // System.out.println(theresults);
+                    // segundo metodo da los resultados completos (incluso aquellos que no son taaaan optimos)
+                    ArrayList<ArrayList<BigDecimal>> thearray = generateArrayInSolesReloaded(theNumber);
                     ArrayList<ArrayList<BigDecimal>> finalarr = removeDuplicates(thearray);
                     System.out.println(finalarr.toString());
+                    // el segundo metodo es algo lento pero funciona
+
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
@@ -52,7 +52,7 @@ public class Main {
 
     }
 
-    public static String generateArraysInSoles(double thenumber) {
+    public static String generateArrayInSoles(double thenumber) {
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         double[] monedasSoles = {0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 200.0};
         // System.out.println(Arrays.toString(monedasSoles));
@@ -114,30 +114,22 @@ public class Main {
 
     private static ArrayList<ArrayList<BigDecimal>> removeDuplicates(ArrayList<ArrayList<BigDecimal>> thearray) {
         ArrayList<ArrayList<BigDecimal>> arrcopy = thearray;
-        // ArrayList<ArrayList<BigDecimal>> brrcopy = thearray;
         ArrayList<ArrayList<BigDecimal>> crrcopy = new ArrayList<>();
 
         for (ArrayList<BigDecimal> arr : arrcopy) {
             if (!hasArr(crrcopy, arr)) {
                 crrcopy.add(arr);
             }
-
         }
-
         return crrcopy;
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private static boolean hasArr(ArrayList<ArrayList<BigDecimal>> crrcopy, ArrayList<BigDecimal> arr) {
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        
+
         for (ArrayList<BigDecimal> crr : crrcopy) {
             if (crr.size() == arr.size()) {
                 Collections.sort(arr);
                 Collections.sort(crr);
-                // System.out.println(crr);
-                // System.out.println(arr);
-                // System.out.println("Son iguales ??");
                 if (crr.equals(arr)) {
                     return true;
                 }
